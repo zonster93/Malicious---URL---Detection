@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>URL Based Phishing Detection</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='lib/animate/animate.min.css')}}"  rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css')}}"  rel="stylesheet">
+
+
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}"  rel="stylesheet">
+
+
+    <link href="{{ url_for('static', filename='css/style.css')}}"  rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+                <h1 class="m-0 text-primary">Phishing Detection</h1>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="{{ url_for('home') }}" class="nav-item nav-link active">Home</a>
+                    <a href="{{ url_for('about') }}" class="nav-item nav-link">About</a>
+                   
+                    <a href="{{ url_for('contact') }}" class="nav-item nav-link">Predition</a>
+                  
+                </div>
+  
+            </div>
+        </nav>
+        <!-- Navbar End -->
+
+
+        <!-- Header End -->
+        <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Prediction</h1>
+                <nav aria-label="breadcrumb">
+                   
+                </nav>
+            </div>
+        </div>
+        <!-- Header End -->
+
+
+        <div class="container-xxl py-5">
+            <div class="container mx-auto">
+                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">URL Phishing Detection</h1>
+                <div class="row g-4">
+                    <div class="col-md-6 mx-auto">
+                        <div class="wow fadeInUp" data-wow-delay="0.5s">
+                            <form action="/predict" method="post">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="subject" placeholder="" name="url">
+                                            <label for="subject">Enter URL</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Predict</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        {% if res == 2 %}
+                        <div class="prediction-container">
+                            <div class="text-center">
+                                <h6><a href="{{ url }}" target="_blank"> this URL: {{ url }} is found in Blacklist</a></h6>
+                            </div>
+                            <br>
+                            <h3 id="prediction"></h3>
+                            
+                            <button class="btn btn-primary w-100 py-3" onclick="window.open('{{ url }}')" target="_blank">Continue</button>
+                        </div>
+                        {% endif %}
+                        {% if res == 1 %}
+                        <div class="prediction-container">
+                            <div class="text-center">
+                                <h6><a href="{{ url }}" target="_blank">{{ url }}</a></h6>
+                            </div>
+                            <br>
+                            <h3 id="prediction"></h3>
+                            
+                            <button class="btn btn-primary w-100 py-3" onclick="window.open('{{ url }}')" target="_blank">Continue</button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+     
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+  
+    
+        <!-- JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    
+        
+        <script>
+            
+                let x = '{{xx}}';
+                let num = x*100;
+                if (0<=x && x<0.50){
+                    num = 100-num;
+                }
+                let txtx = num.toString();
+                if(x<=1 && x>=0.50){
+                    var label = "Website is "+txtx +"% safe to use...";
+                    document.getElementById("prediction").innerHTML = label;
+                    document.getElementById("button1").style.display="block";
+                }
+                else if (0<=x && x<0.50){
+                    var label = "Website is "+txtx +"% unsafe to use..."
+                    document.getElementById("prediction").innerHTML = label ;
+                    document.getElementById("button2").style.display="block";
+                }
+            
+        </script>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{url_for('static', filename='lib/wow/wow.min.js')}}"></script>
+    <script src="{{url_for('static', filename='lib/easing/easing.min.js')}}"></script>
+    <script src="{{url_for('static', filename='lib/waypoints/waypoints.min.js')}}"></script>
+    <script src="{{url_for('static', filename='lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+</body>
+
+</html>
